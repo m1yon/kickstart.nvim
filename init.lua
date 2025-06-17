@@ -102,10 +102,10 @@ vim.g.have_nerd_font = false
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.o.mouse = 'a'
+-- disable mouse mode
+vim.o.mouse = ''
 
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
@@ -168,6 +168,23 @@ vim.o.confirm = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
+
+--  My Keymaps
+vim.keymap.set('n', '<leader>w', ':w!<CR>', { desc = '[W]rite file' })
+vim.keymap.set('n', '<leader>x', ':x!<CR>', { desc = 'Save and quit file' })
+vim.keymap.set('n', '<leader>o', 'o<Esc>', { desc = 'Add new line below cursor' })
+vim.keymap.set('n', '<leader>O', 'O<Esc>', { desc = 'Add new line above cursor' })
+vim.keymap.set('n', '<S-h>', ':tabprevious<CR>', { desc = 'Move to left tab' })
+vim.keymap.set('n', '<S-l>', ':tabnext<CR>', { desc = 'Move to right tab' })
+vim.keymap.set('n', '<C-w>', ':tabclose<CR>', { desc = 'Close current tab' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half scroll [D]own and center' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half scroll [U]p and center' })
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Search forward and center' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Search back and center' })
+
+vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = 'Open diagnosis window' })
+vim.keymap.set('n', '<leader>dl', vim.diagnostic.goto_next, { desc = 'Show next diagnosis' })
+vim.keymap.set('n', '<leader>dh', vim.diagnostic.goto_prev, { desc = 'Show previous diagnosis' })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -345,7 +362,9 @@ require('lazy').setup({
       -- Document existing key chains
       spec = {
         { '<leader>s', group = '[S]earch' },
-        { '<leader>t', group = '[T]oggle' },
+        { '<leader>t', group = '[T]est' },
+        { '<leader>g', group = '[G]it' },
+        { '<leader>d', group = '[D]iagnosis' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
@@ -619,7 +638,7 @@ require('lazy').setup({
           --
           -- This may be unwanted, since they displace some of your code
           if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-            map('<leader>th', function()
+            map('<leader>h', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
           end
@@ -672,8 +691,8 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
+        gopls = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -881,20 +900,16 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+    'catppuccin/nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
+    name = 'catppuccin',
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
+      require('catppuccin').load()
 
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
   },
 
@@ -980,6 +995,125 @@ require('lazy').setup({
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
+  -- LazyGit
+  {
+    'kdheepak/lazygit.nvim',
+    lazy = true,
+    cmd = {
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+    },
+  },
+
+  -- neotest
+  {
+    'nvim-neotest/neotest',
+    dependencies = {
+      'nvim-neotest/nvim-nio',
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    keys = {
+      {
+        '<leader>tn',
+        function()
+          require('neotest').run.run()
+        end,
+        desc = 'Run the [N]earest test',
+      },
+      {
+        '<leader>tf',
+        function()
+          require('neotest').run.run(vim.fn.expand '%')
+        end,
+        desc = 'Run the current [F]ile',
+      },
+      {
+        '<leader>tx',
+        function()
+          require('neotest').run.stop()
+        end,
+        desc = 'Stop the nearest test',
+      },
+      {
+        '<leader>ts',
+        function()
+          require('neotest').summary.toggle()
+        end,
+        desc = 'Toggle [S]ummary window',
+      },
+      {
+        '<leader>ta',
+        function()
+          require('neotest').run.run(vim.fn.getcwd())
+        end,
+        desc = 'Run [A]ll tests',
+      },
+      {
+        '<leader>tl',
+        function()
+          require('neotest').run.run_last()
+        end,
+        desc = 'Run [L]ast test',
+      },
+      {
+        '<leader>to',
+        function()
+          require('neotest').output_panel.toggle()
+        end,
+        desc = 'Toggle [O]utput window',
+      },
+    },
+  },
+  {
+    'nvim-neotest/neotest',
+    dependencies = {
+      'nvim-neotest/nvim-nio',
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      { 'fredrikaverpil/neotest-golang', version = '*' }, -- Installation
+    },
+    config = function()
+      local neotest_golang_opts = {} -- Specify custom configuration
+      require('neotest').setup {
+        adapters = {
+          require 'neotest-golang'(neotest_golang_opts), -- Registration
+        },
+      }
+    end,
+  },
+
+  {
+    'sindrets/diffview.nvim',
+    config = function()
+      -- For DiffviewFileHistory % (history of the current file)
+      vim.keymap.set('n', '<leader>gf', '<cmd>DiffviewFileHistory %<CR>', { desc = 'View [F]ile history' })
+
+      -- For DiffviewOpen with a dynamic branch reference
+      vim.keymap.set('n', '<leader>gd', function()
+        -- Prompt the user for a branch name
+        local branch_name = vim.fn.input 'Diff branch (e.g., main, develop): '
+        -- If the user entered something, execute DiffviewOpen with that branch
+        if branch_name ~= nil and branch_name ~= '' then
+          vim.cmd('DiffviewOpen ' .. branch_name)
+        end
+      end, { desc = 'Open [D]iff' })
+    end,
+  },
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
