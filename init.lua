@@ -365,6 +365,7 @@ require('lazy').setup({
         { '<leader>t', group = '[T]est' },
         { '<leader>g', group = '[G]it' },
         { '<leader>d', group = '[D]iagnosis' },
+        { '<leader>gl', group = '[L]azyGit' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
@@ -735,6 +736,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'gofumpt',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -787,6 +789,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        go = { 'gofumpt' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -1013,7 +1016,21 @@ require('lazy').setup({
     -- setting the keybinding for LazyGit with 'keys' is recommended in
     -- order to load the plugin when the command is run for the first time
     keys = {
-      { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+      { '<leader>glr', '<cmd>LazyGit<cr>', desc = 'Open [R]epsitory in LazyGit' },
+      { '<leader>glc', '<cmd>LazyGitCurrentFile<cr>', desc = 'Open [C]urrent File in LazyGit' },
+    },
+  },
+
+  -- dotenv
+  {
+    'ellisonleao/dotenv.nvim',
+    config = function()
+      require('dotenv').setup {
+        verbose = true,
+      }
+    end,
+    keys = {
+      { '<leader>e', '<cmd>Dotenv<cr>', desc = 'Load dot[E]nv file' },
     },
   },
 
@@ -1025,6 +1042,7 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
       'antoinemadec/FixCursorHold.nvim',
       'nvim-treesitter/nvim-treesitter',
+      { 'fredrikaverpil/neotest-golang', version = '*' }, -- Installation
     },
     keys = {
       {
@@ -1077,16 +1095,6 @@ require('lazy').setup({
         desc = 'Toggle [O]utput window',
       },
     },
-  },
-  {
-    'nvim-neotest/neotest',
-    dependencies = {
-      'nvim-neotest/nvim-nio',
-      'nvim-lua/plenary.nvim',
-      'antoinemadec/FixCursorHold.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      { 'fredrikaverpil/neotest-golang', version = '*' }, -- Installation
-    },
     config = function()
       local neotest_golang_opts = {} -- Specify custom configuration
       require('neotest').setup {
@@ -1095,6 +1103,23 @@ require('lazy').setup({
         },
       }
     end,
+  },
+
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+  },
+
+  {
+    'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+        -- config
+      }
+    end,
+    dependencies = { { 'nvim-tree/nvim-web-devicons' } },
   },
 
   {
