@@ -247,17 +247,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 
--- configure quickscope plugin
-vim.g.qs_highlight_on_keys = { 'f', 'F', 't', 'T' }
-vim.api.nvim_create_augroup('qs_colors', { clear = true })
-vim.api.nvim_create_autocmd('ColorScheme', {
-  group = 'qs_colors',
-  callback = function()
-    vim.cmd "highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline"
-    vim.cmd "highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline"
-  end,
-})
-
 ---@type vim.Option
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
@@ -1002,7 +991,7 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
@@ -1027,90 +1016,6 @@ require('lazy').setup({
     keys = {
       { '<leader>gl', '<cmd>LazyGitCurrentFile<cr>', desc = 'Open in LazyGit' },
     },
-  },
-
-  -- dotenv
-  {
-    'ellisonleao/dotenv.nvim',
-    config = function()
-      require('dotenv').setup {
-        verbose = true,
-      }
-    end,
-    keys = {
-      { '<leader>e', '<cmd>Dotenv<cr>', desc = 'Load dot[E]nv file' },
-    },
-  },
-
-  -- neotest
-  {
-    'nvim-neotest/neotest',
-    dependencies = {
-      'nvim-neotest/nvim-nio',
-      'nvim-lua/plenary.nvim',
-      'antoinemadec/FixCursorHold.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      { 'fredrikaverpil/neotest-golang', version = '*' }, -- Installation
-    },
-    keys = {
-      {
-        '<leader>tn',
-        function()
-          require('neotest').run.run()
-        end,
-        desc = 'Run the [N]earest test',
-      },
-      {
-        '<leader>tf',
-        function()
-          require('neotest').run.run(vim.fn.expand '%')
-        end,
-        desc = 'Run the current [F]ile',
-      },
-      {
-        '<leader>tx',
-        function()
-          require('neotest').run.stop()
-        end,
-        desc = 'Stop the nearest test',
-      },
-      {
-        '<leader>ts',
-        function()
-          require('neotest').summary.toggle()
-        end,
-        desc = 'Toggle [S]ummary window',
-      },
-      {
-        '<leader>ta',
-        function()
-          require('neotest').run.run(vim.fn.getcwd())
-        end,
-        desc = 'Run [A]ll tests',
-      },
-      {
-        '<leader>tl',
-        function()
-          require('neotest').run.run_last()
-        end,
-        desc = 'Run [L]ast test',
-      },
-      {
-        '<leader>to',
-        function()
-          require('neotest').output_panel.toggle()
-        end,
-        desc = 'Toggle [O]utput window',
-      },
-    },
-    config = function()
-      local neotest_golang_opts = {} -- Specify custom configuration
-      require('neotest').setup {
-        adapters = {
-          require 'neotest-golang'(neotest_golang_opts), -- Registration
-        },
-      }
-    end,
   },
 
   {
@@ -1149,10 +1054,6 @@ require('lazy').setup({
   },
 
   {
-    'unblevable/quick-scope',
-  },
-
-  {
     'kevinhwang91/nvim-hlslens',
     config = function()
       require('hlslens').setup()
@@ -1184,6 +1085,21 @@ require('lazy').setup({
         },
       }
     end,
+  },
+
+  {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    ---@type Flash.Config
+    opts = {},
+  -- stylua: ignore
+  keys = {
+    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  },
   },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
