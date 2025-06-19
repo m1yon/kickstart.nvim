@@ -182,6 +182,10 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half scroll [U]p and center' }
 vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Search forward and center' })
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Search back and center' })
 
+-- stay in visual mode when identing
+vim.keymap.set('v', '>', '>gv')
+vim.keymap.set('v', '<', '<gv')
+
 vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = 'Open diagnosis window' })
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.goto_next, { desc = 'Show next diagnosis' })
 vim.keymap.set('n', '<leader>dh', vim.diagnostic.goto_prev, { desc = 'Show previous diagnosis' })
@@ -362,7 +366,7 @@ require('lazy').setup({
       -- Document existing key chains
       spec = {
         { '<leader>s', group = '[S]earch' },
-        { '<leader>t', group = '[T]est' },
+        { '<leader>t', group = '[T]oggle' },
         { '<leader>d', group = '[D]iagnosis' },
         { '<leader>gl', group = '[L]azyGit' },
       },
@@ -692,6 +696,7 @@ require('lazy').setup({
         -- clangd = {},
         gopls = {},
         pyright = {},
+
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -1100,6 +1105,57 @@ require('lazy').setup({
     { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
     { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
   },
+  },
+
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+  },
+
+  {
+    'hat0uma/csvview.nvim',
+    ---@module "csvview"
+    ---@type CsvView.Options
+    opts = {
+      parser = { comments = { '#', '//' } },
+      keymaps = {
+        -- Text objects for selecting fields
+        textobject_field_inner = { 'if', mode = { 'o', 'x' } },
+        textobject_field_outer = { 'af', mode = { 'o', 'x' } },
+        -- Excel-like navigation:
+        -- Use <Tab> and <S-Tab> to move horizontally between fields.
+        -- Use <Enter> and <S-Enter> to move vertically between rows and place the cursor at the end of the field.
+        -- Note: In terminals, you may need to enable CSI-u mode to use <S-Tab> and <S-Enter>.
+        jump_next_field_end = { '<Tab>', mode = { 'n', 'v' } },
+        jump_prev_field_end = { '<S-Tab>', mode = { 'n', 'v' } },
+        jump_next_row = { '<Enter>', mode = { 'n', 'v' } },
+        jump_prev_row = { '<S-Enter>', mode = { 'n', 'v' } },
+      },
+    },
+    cmd = { 'CsvViewEnable', 'CsvViewDisable', 'CsvViewToggle' },
+  },
+
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup {
+        toggler = {
+          line = '<leader>tc',
+          block = '<leader>tb',
+        },
+        mappings = {
+          basic = true,
+          extra = false,
+        },
+      }
+    end,
   },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
