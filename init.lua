@@ -247,6 +247,17 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 
+-- configure quickscope plugin
+vim.g.qs_highlight_on_keys = { 'f', 'F', 't', 'T' }
+vim.api.nvim_create_augroup('qs_colors', { clear = true })
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = 'qs_colors',
+  callback = function()
+    vim.cmd "highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline"
+    vim.cmd "highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline"
+  end,
+})
+
 ---@type vim.Option
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
@@ -363,10 +374,8 @@ require('lazy').setup({
       spec = {
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]est' },
-        { '<leader>g', group = '[G]it' },
         { '<leader>d', group = '[D]iagnosis' },
         { '<leader>gl', group = '[L]azyGit' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
   },
@@ -1016,8 +1025,7 @@ require('lazy').setup({
     -- setting the keybinding for LazyGit with 'keys' is recommended in
     -- order to load the plugin when the command is run for the first time
     keys = {
-      { '<leader>glr', '<cmd>LazyGit<cr>', desc = 'Open [R]epsitory in LazyGit' },
-      { '<leader>glc', '<cmd>LazyGitCurrentFile<cr>', desc = 'Open [C]urrent File in LazyGit' },
+      { '<leader>gl', '<cmd>LazyGitCurrentFile<cr>', desc = 'Open in LazyGit' },
     },
   },
 
@@ -1119,7 +1127,7 @@ require('lazy').setup({
         -- config
       }
     end,
-    dependencies = { { 'nvim-tree/nvim-web-devicons' } },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
 
   {
@@ -1139,6 +1147,45 @@ require('lazy').setup({
       end, { desc = 'Open [D]iff' })
     end,
   },
+
+  {
+    'unblevable/quick-scope',
+  },
+
+  {
+    'kevinhwang91/nvim-hlslens',
+    config = function()
+      require('hlslens').setup()
+
+      local kopts = { noremap = true, silent = true }
+
+      vim.api.nvim_set_keymap('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+
+      vim.api.nvim_set_keymap('n', '<Leader>l', '<Cmd>noh<CR>', kopts)
+    end,
+  },
+
+  {
+    'petertriho/nvim-scrollbar',
+    config = function()
+      require('scrollbar').setup {
+        handlers = {
+          cursor = true,
+          diagnostic = true,
+          gitsigns = false, -- Requires gitsigns
+          handle = true,
+          search = true,
+          ale = false, -- Requires ALE
+        },
+      }
+    end,
+  },
+
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
