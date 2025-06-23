@@ -103,6 +103,23 @@ vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 vim.o.relativenumber = true
+local autocmd = vim.api.nvim_create_autocmd
+-- relative numbers by default, absolute line numbers in command mode
+local autocmd_group = vim.api.nvim_create_augroup('MyDots', { clear = true })
+autocmd({ 'CmdlineEnter' }, {
+  group = autocmd_group,
+  callback = function()
+    vim.opt.relativenumber = false
+    vim.cmd.redraw()
+  end,
+})
+autocmd({ 'CmdlineLeave' }, {
+  group = autocmd_group,
+  callback = function()
+    vim.opt.relativenumber = true
+    vim.cmd.redraw()
+  end,
+})
 
 -- disable mouse mode
 vim.o.mouse = ''
@@ -169,11 +186,11 @@ vim.o.confirm = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
---  My Keymaps
+-- My Keymaps
 vim.keymap.set('n', '<leader>w', ':w!<CR>', { desc = '[W]rite file' })
 vim.keymap.set('n', '<leader>x', ':x!<CR>', { desc = 'Save and quit file' })
-vim.keymap.set('n', '<leader>o', 'o<Esc>', { desc = 'Add new line below cursor' })
-vim.keymap.set('n', '<leader>O', 'O<Esc>', { desc = 'Add new line above cursor' })
+vim.keymap.set('n', '<CR>', 'm`o<Esc>``')
+vim.keymap.set('n', '<S-CR>', 'm`O<Esc>``')
 vim.keymap.set('n', '<S-h>', ':tabprevious<CR>', { desc = 'Move to left tab' })
 vim.keymap.set('n', '<S-l>', ':tabnext<CR>', { desc = 'Move to right tab' })
 vim.keymap.set('n', '<C-w>', ':tabclose<CR>', { desc = 'Close current tab' })
@@ -366,7 +383,6 @@ require('lazy').setup({
       -- Document existing key chains
       spec = {
         { '<leader>s', group = '[S]earch' },
-        { '<leader>t', group = '[T]oggle' },
         { '<leader>d', group = '[D]iagnosis' },
         { '<leader>gl', group = '[L]azyGit' },
       },
@@ -740,6 +756,7 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'gofumpt',
+        'ruff',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -793,8 +810,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         go = { 'gofumpt' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'ruff_format' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -940,6 +956,22 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
+      require('mini.move').setup {
+        mappings = {
+          -- Move visual selection in Visual mode.
+          left = 'H',
+          right = 'L',
+          down = 'J',
+          up = 'K',
+
+          -- Move current line in Normal mode
+          line_left = '',
+          line_right = '',
+          line_down = '',
+          line_up = '',
+        },
+      }
+
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
@@ -1001,43 +1033,10 @@ require('lazy').setup({
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
-  -- LazyGit
-  {
-    'kdheepak/lazygit.nvim',
-    lazy = true,
-    cmd = {
-      'LazyGit',
-      'LazyGitConfig',
-      'LazyGitCurrentFile',
-      'LazyGitFilter',
-      'LazyGitFilterCurrentFile',
-    },
-    -- optional for floating window border decoration
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-    -- setting the keybinding for LazyGit with 'keys' is recommended in
-    -- order to load the plugin when the command is run for the first time
-    keys = {
-      { '<leader>gl', '<cmd>LazyGitCurrentFile<cr>', desc = 'Open in LazyGit' },
-    },
-  },
-
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = true,
-  },
-
-  {
-    'nvimdev/dashboard-nvim',
-    event = 'VimEnter',
-    config = function()
-      require('dashboard').setup {
-        -- config
-      }
-    end,
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
 
   {
@@ -1145,17 +1144,91 @@ require('lazy').setup({
   {
     'numToStr/Comment.nvim',
     config = function()
-      require('Comment').setup {
-        toggler = {
-          line = '<leader>tc',
-          block = '<leader>tb',
-        },
-        mappings = {
-          basic = true,
-          extra = false,
-        },
-      }
+      require('Comment').setup()
     end,
+  },
+
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+    config = function()
+      local harpoon = require 'harpoon'
+
+      -- basic telescope configuration
+      local conf = require('telescope.config').values
+      local function toggle_telescope(harpoon_files)
+        local file_paths = {}
+        for _, item in ipairs(harpoon_files.items) do
+          table.insert(file_paths, item.value)
+        end
+
+        require('telescope.pickers')
+          .new({}, {
+            prompt_title = 'Harpoon',
+            finder = require('telescope.finders').new_table {
+              results = file_paths,
+            },
+            previewer = conf.file_previewer {},
+            sorter = conf.generic_sorter {},
+          })
+          :find()
+      end
+
+      -- REQUIRED
+      harpoon:setup()
+      -- REQUIRED
+
+      vim.keymap.set('n', '<leader>t', function()
+        harpoon:list():add()
+      end, { desc = 'Throw a harpoon!' })
+      vim.keymap.set('n', '<C-h>', function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end)
+
+      -- Toggle previous & next buffers stored within Harpoon list
+      vim.keymap.set('n', '<C-S-K>', function()
+        harpoon:list():prev()
+      end)
+      vim.keymap.set('n', '<C-S-J>', function()
+        harpoon:list():next()
+      end)
+
+      local extensions = require 'harpoon.extensions'
+      harpoon:extend(extensions.builtins.navigate_with_number())
+    end,
+  },
+  {
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = true },
+      dashboard = { enabled = true },
+      indent = { enabled = true },
+      input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      words = { enabled = true },
+      lazygit = { enabled = true },
+    },
+    keys = {
+      {
+        '<leader>gl',
+        function()
+          local file = vim.trim(vim.api.nvim_buf_get_name(0))
+          Snacks.lazygit.open { cwd = vim.fn.fnamemodify(file, ':h') }
+        end,
+        mode = '',
+        desc = 'Open [L]azygit',
+      },
+    },
   },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
