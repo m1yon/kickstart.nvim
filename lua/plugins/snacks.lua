@@ -29,6 +29,13 @@ return {
         end,
         desc = 'Open [L]azygit',
       },
+      {
+        '<leader>gf',
+        function()
+          Snacks.lazygit.log_file()
+        end,
+        desc = 'View [F]ile history',
+      },
     },
   },
 }
