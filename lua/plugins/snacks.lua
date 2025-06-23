@@ -18,7 +18,17 @@ return {
       },
       indent = { enabled = true, animate = { enabled = false } },
       input = { enabled = true },
-      picker = { enabled = true },
+      picker = {
+        enabled = true,
+        win = {
+          input = {
+            keys = {
+              ['<c-i>'] = { 'toggle_ignored', mode = { 'i', 'n' } },
+              ['<c-h>'] = { 'toggle_hidden', mode = { 'i', 'n' } },
+            },
+          },
+        },
+      },
       notifier = { enabled = true },
       quickfile = { enabled = true },
       scope = { enabled = true },
