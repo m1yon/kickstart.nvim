@@ -281,18 +281,6 @@ require('lazy').setup({
   -- options to `gitsigns.nvim`.
   --
   -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -366,8 +354,10 @@ require('lazy').setup({
   -- you do for a plugin at the top level, you can do for a dependency.
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
+  require 'plugins/snacks',
   require 'lsp',
   require 'syntax',
+  require 'git',
   { -- Autoformat
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
@@ -600,37 +590,7 @@ require('lazy').setup({
     end,
   },
   require 'navigation',
-  {
-    'folke/snacks.nvim',
-    priority = 1000,
-    lazy = false,
-    ---@type snacks.Config
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-      bigfile = { enabled = true },
-      dashboard = { enabled = true },
-      indent = { enabled = true, animate = { enabled = false } },
-      input = { enabled = true },
-      picker = { enabled = true },
-      notifier = { enabled = true },
-      quickfile = { enabled = true },
-      scope = { enabled = true },
-      words = { enabled = true },
-      lazygit = { enabled = true },
-    },
-    keys = {
-      {
-        '<leader>gl',
-        function()
-          local file = vim.trim(vim.api.nvim_buf_get_name(0))
-          Snacks.lazygit.open { cwd = vim.fn.fnamemodify(file, ':h') }
-        end,
-        desc = 'Open [L]azygit',
-      },
-    },
-  },
+
   {
     'm4xshen/hardtime.nvim',
     lazy = false,
