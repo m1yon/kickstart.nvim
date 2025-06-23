@@ -384,7 +384,6 @@ require('lazy').setup({
       spec = {
         { '<leader>s', group = '[S]earch' },
         { '<leader>d', group = '[D]iagnosis' },
-        { '<leader>gl', group = '[L]azyGit' },
       },
     },
   },
@@ -1225,10 +1224,15 @@ require('lazy').setup({
           local file = vim.trim(vim.api.nvim_buf_get_name(0))
           Snacks.lazygit.open { cwd = vim.fn.fnamemodify(file, ':h') }
         end,
-        mode = '',
         desc = 'Open [L]azygit',
       },
     },
+  },
+  {
+    'm4xshen/hardtime.nvim',
+    lazy = false,
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    opts = {},
   },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
