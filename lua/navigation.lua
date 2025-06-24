@@ -29,54 +29,17 @@ autocmd({ 'CmdlineLeave' }, {
 
 return {
   {
-    'ThePrimeagen/harpoon',
-    branch = 'harpoon2',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
-    config = function()
-      local harpoon = require 'harpoon'
-
-      -- basic telescope configuration
-      local conf = require('telescope.config').values
-      local function toggle_telescope(harpoon_files)
-        local file_paths = {}
-        for _, item in ipairs(harpoon_files.items) do
-          table.insert(file_paths, item.value)
-        end
-
-        require('telescope.pickers')
-          .new({}, {
-            prompt_title = 'Harpoon',
-            finder = require('telescope.finders').new_table {
-              results = file_paths,
-            },
-            previewer = conf.file_previewer {},
-            sorter = conf.generic_sorter {},
-          })
-          :find()
-      end
-
-      -- REQUIRED
-      harpoon:setup()
-      -- REQUIRED
-
-      vim.keymap.set('n', '<leader>t', function()
-        harpoon:list():add()
-      end, { desc = 'Throw a harpoon!' })
-      vim.keymap.set('n', '<C-h>', function()
-        harpoon.ui:toggle_quick_menu(harpoon:list())
-      end)
-
-      -- Toggle previous & next buffers stored within Harpoon list
-      vim.keymap.set('n', '<C-S-K>', function()
-        harpoon:list():prev()
-      end)
-      vim.keymap.set('n', '<C-S-J>', function()
-        harpoon:list():next()
-      end)
-
-      local extensions = require 'harpoon.extensions'
-      harpoon:extend(extensions.builtins.navigate_with_number())
-    end,
+    'otavioschwanck/arrow.nvim',
+    dependencies = {
+      { 'nvim-tree/nvim-web-devicons' },
+      -- or if using `mini.icons`
+      -- { "echasnovski/mini.icons" },
+    },
+    opts = {
+      show_icons = true,
+      leader_key = ';', -- Recommended to be a single key
+      buffer_leader_key = 'm', -- Per Buffer Mappings
+    },
   },
 
   {
