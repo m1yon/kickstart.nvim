@@ -21,7 +21,7 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        go = { 'gofumpt', 'goimports' },
+        go = { 'gofumpt', 'goimports', 'golines' },
         python = { 'ruff_format' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list

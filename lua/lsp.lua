@@ -206,6 +206,7 @@ return {
         'stylua', -- Used to format Lua code
         'gofumpt',
         'goimports',
+        'golines',
         'ruff',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
