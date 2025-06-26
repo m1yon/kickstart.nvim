@@ -22,7 +22,7 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         go = { 'gofumpt', 'goimports', 'golines' },
-        python = { 'ruff_format' },
+        python = { 'ruff_fix', 'ruff_format' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },

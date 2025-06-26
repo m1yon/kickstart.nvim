@@ -160,6 +160,20 @@ return {
       local servers = {
         -- clangd = {},
         gopls = {},
+        pyright = {
+          settings = {
+            pyright = {
+              -- Using Ruff's import organizer
+              disableOrganizeImports = true,
+            },
+            python = {
+              analysis = {
+                -- Ignore all files for analysis to exclusively use Ruff for linting
+                ignore = { '*' },
+              },
+            },
+          },
+        },
         ruff = {},
 
         -- rust_analyzer = {},
@@ -208,6 +222,7 @@ return {
         'goimports',
         'golines',
         'ruff',
+        'pyright',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
