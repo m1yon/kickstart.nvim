@@ -256,7 +256,6 @@ require('lazy').setup({
   require 'formatting',
   require 'fs',
   require 'help',
-  require 'comments',
   require 'editing',
   require 'linting',
   require 'csv',
