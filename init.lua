@@ -172,6 +172,12 @@ vim.keymap.set('n', '<leader>x', ':x!<CR>', { desc = 'Save and quit file' })
 vim.keymap.set('n', '<CR>', 'm`o<Esc>``')
 vim.keymap.set('n', '<S-CR>', 'm`O<Esc>``')
 
+-- remove conflicting default keybindings
+vim.keymap.del('n', 'grn')
+vim.keymap.del('n', 'grr')
+vim.keymap.del('n', 'gra')
+vim.keymap.del('n', 'gri')
+
 -- stay in visual mode when identing
 vim.keymap.set('v', '>', '>gv')
 vim.keymap.set('v', '<', '<gv')
