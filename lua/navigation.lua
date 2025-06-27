@@ -47,6 +47,34 @@ return {
     event = 'VeryLazy',
     ---@type Flash.Config
     opts = {},
+    config = function()
+      require('flash').setup {}
+
+      vim.api.nvim_set_hl(0, 'FlashBackdrop', { fg = '#555566' })
+
+      vim.api.nvim_set_hl(0, 'FlashMatch', {
+        fg = '#22d3ee',
+        bold = true,
+        nocombine = true,
+      })
+
+      vim.api.nvim_set_hl(0, 'FlashCurrent', {
+        fg = '#a3e635',
+        bold = true,
+        nocombine = true,
+      })
+
+      vim.api.nvim_set_hl(0, 'FlashLabel', {
+        fg = '#ffffff',
+        bg = '#ff0077',
+        bold = true,
+        nocombine = true,
+      })
+
+      vim.api.nvim_set_hl(0, 'FlashPrompt', { fg = '#f0f0f0' })
+      vim.api.nvim_set_hl(0, 'FlashPromptIcon', { fg = '#ff0077' })
+      vim.api.nvim_set_hl(0, 'FlashCursor', { bg = '#ff8800' })
+    end,
   -- stylua: ignore
   keys = {
     { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
@@ -55,21 +83,5 @@ return {
     { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
     { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
   },
-  },
-
-  {
-    'kevinhwang91/nvim-hlslens',
-    config = function()
-      require('hlslens').setup()
-
-      local kopts = { noremap = true, silent = true }
-
-      vim.api.nvim_set_keymap('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-    end,
   },
 }

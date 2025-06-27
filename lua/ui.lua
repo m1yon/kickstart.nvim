@@ -1,20 +1,4 @@
 return {
-  {
-    'petertriho/nvim-scrollbar',
-    config = function()
-      require('scrollbar').setup {
-        handlers = {
-          cursor = true,
-          diagnostic = true,
-          gitsigns = false, -- Requires gitsigns
-          handle = true,
-          search = true,
-          ale = false, -- Requires ALE
-        },
-      }
-    end,
-  },
-
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
