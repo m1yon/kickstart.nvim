@@ -1,6 +1,3 @@
-vim.keymap.set('n', '<S-h>', ':tabprevious<CR>', { desc = 'Move to left tab' })
-vim.keymap.set('n', '<S-l>', ':tabnext<CR>', { desc = 'Move to right tab' })
-vim.keymap.set('n', '<C-w>', ':tabclose<CR>', { desc = 'Close current tab' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half scroll [D]own and center' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half scroll [U]p and center' })
 vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Search forward and center' })
@@ -38,7 +35,7 @@ return {
     opts = {
       show_icons = true,
       leader_key = ';', -- Recommended to be a single key
-      buffer_leader_key = ':', -- Per Buffer Mappings
+      buffer_leader_key = '<C-;>', -- Per Buffer Mappings
     },
   },
 

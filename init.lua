@@ -178,10 +178,6 @@ vim.keymap.del('n', 'grr')
 vim.keymap.del('n', 'gra')
 vim.keymap.del('n', 'gri')
 
--- stay in visual mode when identing
-vim.keymap.set('v', '>', '>gv')
-vim.keymap.set('v', '<', '<gv')
-
 vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = 'Open diagnosis window' })
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.goto_next, { desc = 'Show next diagnosis' })
 vim.keymap.set('n', '<leader>dh', vim.diagnostic.goto_prev, { desc = 'Show previous diagnosis' })
