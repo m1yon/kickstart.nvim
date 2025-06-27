@@ -1,3 +1,5 @@
+vim.opt.tabstop = 2
+
 return {
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
