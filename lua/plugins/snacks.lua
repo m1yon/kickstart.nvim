@@ -396,6 +396,14 @@ return {
         desc = 'Rename',
       },
       {
+        'ga',
+        function(opts)
+          vim.lsp.buf.code_action(opts)
+        end,
+        nowait = true,
+        desc = 'Code [A]ction',
+      },
+      {
         'gI',
         function()
           Snacks.picker.lsp_implementations()
