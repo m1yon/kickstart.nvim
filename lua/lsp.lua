@@ -213,6 +213,7 @@ return {
         'biome',
         'gopls',
         'tailwindcss-language-server',
+        { 'golangci-lint', version = 'v1.64.7' },
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
