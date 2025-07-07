@@ -23,9 +23,10 @@ return {
         lua = { 'stylua' },
         go = { 'gofumpt', 'goimports', 'golines' },
         python = { 'ruff_fix', 'ruff_format' },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { 'biome', 'biome-check', 'biome-organize-imports' },
+        typescript = { 'biome', 'biome-check', 'biome-organize-imports' },
+        javascriptreact = { 'biome', 'biome-check', 'biome-organize-imports' },
+        typescriptreact = { 'biome', 'biome-check', 'biome-organize-imports' },
       },
     },
   },
