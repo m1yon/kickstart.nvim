@@ -62,6 +62,7 @@ return {
         '<leader>dt',
         mode = { 'n' },
         function()
+          require('dapui').open()
           require('dap-go').debug_test()
         end,
         desc = 'Debug [T]est under cursor',
@@ -70,6 +71,7 @@ return {
         '<leader>da',
         mode = { 'n' },
         function()
+          require('dapui').open()
           require('dap-go').debug_last_test()
         end,
         desc = 'Debug last test [A]gian',
