@@ -12,4 +12,16 @@ return {
     },
   },
   { 'akinsho/git-conflict.nvim', version = '*', config = true },
+  {
+    'sindrets/diffview.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    keys = {
+      {
+        '<leader>gf',
+        mode = { 'n', 'x', 'o' },
+        '<Cmd>DiffviewFileHistory %<CR>',
+        desc = 'View [F]ile history',
+      },
+    },
+  },
 }

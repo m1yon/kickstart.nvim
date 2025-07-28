@@ -2,6 +2,7 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half scroll [D]own and center'
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half scroll [U]p and center' })
 vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Search forward and center' })
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Search back and center' })
+vim.keymap.set('n', '<C-w>', '<cmd>tabclose<cr>', { desc = 'Search back and center' })
 
 -- disable mouse mode
 vim.o.mouse = ''
