@@ -164,6 +164,7 @@ return {
         ruff = {},
         biome = {},
         jsonls = {},
+        vale_ls = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -206,6 +207,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'vale-ls',
         'gofumpt',
         'goimports',
         'golines',
