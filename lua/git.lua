@@ -14,6 +14,11 @@ return {
   { 'akinsho/git-conflict.nvim', version = '*', config = true },
   {
     'sindrets/diffview.nvim',
+    opts = {
+      default_args = {
+        DiffviewOpen = { '--imply-local' },
+      },
+    },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
       {
@@ -21,6 +26,12 @@ return {
         mode = { 'n', 'x', 'o' },
         '<Cmd>DiffviewFileHistory %<CR>',
         desc = 'View [F]ile history',
+      },
+      {
+        '<leader>gd',
+        mode = { 'n', 'x', 'o' },
+        '<Cmd>DiffviewOpen<CR>',
+        desc = 'View [D]iff view',
       },
     },
   },
