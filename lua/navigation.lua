@@ -44,7 +44,13 @@ return {
     ---@type Flash.Config
     opts = {},
     config = function()
-      require('flash').setup()
+      require('flash').setup {
+        modes = {
+          char = {
+            enabled = false,
+          },
+        },
+      }
 
       vim.api.nvim_set_hl(0, 'FlashBackdrop', { fg = '#555566' })
 
