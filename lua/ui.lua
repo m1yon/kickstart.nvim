@@ -145,7 +145,7 @@ return {
         tabline = {},
         winbar = {},
         inactive_winbar = {},
-        extensions = { 'nvim-dap-ui', 'mason', 'fzf', 'lazy' },
+        extensions = { 'nvim-dap-ui', 'mason', 'fzf', 'lazy', 'fugitive' },
       }
     end,
   },
