@@ -46,6 +46,8 @@ return {
       }
 
       require('mini.files').setup()
+      require('mini.git').setup()
+      require('mini.diff').setup()
       require('mini.comment').setup()
       require('mini.starter').setup()
       require('mini.jump2d').setup()
@@ -53,6 +55,8 @@ return {
       require('mini.pick').setup()
       require('mini.extra').setup()
       require('mini.cursorword').setup()
+      require('mini.icons').setup()
+      require('mini.statusline').setup()
 
       local indentscope = require 'mini.indentscope'
       indentscope.setup {
