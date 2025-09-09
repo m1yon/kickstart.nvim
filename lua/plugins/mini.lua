@@ -49,6 +49,7 @@ return {
       require('mini.comment').setup()
       require('mini.starter').setup()
       require('mini.jump2d').setup()
+      require('mini.jump').setup()
 
       local starter = require 'mini.starter'
       starter.setup {
