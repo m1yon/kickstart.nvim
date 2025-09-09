@@ -55,6 +55,7 @@ return {
       require('mini.pick').setup()
       require('mini.extra').setup()
       require('mini.cursorword').setup()
+      require('mini.visits').setup()
       require('mini.icons').setup()
       require('mini.statusline').setup()
 
@@ -115,6 +116,7 @@ return {
           { mode = 'n', keys = '<Leader>f', desc = '+Find' },
           { mode = 'n', keys = '<Leader>l', desc = '+LSP' },
           { mode = 'n', keys = '<Leader>g', desc = '+Git' },
+          { mode = 'n', keys = '<Leader>v', desc = '+Visits' },
         },
       }
 
@@ -210,6 +212,46 @@ return {
           miniExtra.pickers.lsp { scope = 'implementation' }
         end,
         desc = 'Find [I]mplementations',
+      },
+
+      {
+        '<leader>fd',
+        mode = { 'n' },
+        function()
+          local miniExtra = require 'mini.extra'
+          miniExtra.pickers.diagnostic()
+        end,
+        desc = 'Find [D]iagnostics',
+      },
+
+      {
+        '<leader>vr',
+        mode = { 'n' },
+        function()
+          local miniExtra = require 'mini.extra'
+          miniExtra.pickers.visit_paths()
+        end,
+        desc = '[R]ecent Visits',
+      },
+
+      {
+        '<leader>vl',
+        mode = { 'n' },
+        function()
+          local miniExtra = require 'mini.extra'
+          miniExtra.pickers.visit_labels()
+        end,
+        desc = 'Visit [L]abels',
+      },
+
+      {
+        '<leader>va',
+        mode = { 'n' },
+        function()
+          local miniVisits = require 'mini.visits'
+          miniVisits.add_label()
+        end,
+        desc = '[A]dd Label',
       },
     },
   },
