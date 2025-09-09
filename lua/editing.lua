@@ -6,11 +6,6 @@ return {
     end,
   },
   {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    config = true,
-  },
-  {
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
     config = function()

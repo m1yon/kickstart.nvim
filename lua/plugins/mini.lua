@@ -58,6 +58,7 @@ return {
       require('mini.visits').setup()
       require('mini.icons').setup()
       require('mini.statusline').setup()
+      require('mini.pairs').setup()
 
       local indentscope = require 'mini.indentscope'
       indentscope.setup {

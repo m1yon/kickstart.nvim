@@ -261,7 +261,6 @@ require('lazy').setup({
   require 'linting',
   require 'plugins/snacks',
   require 'plugins/mini',
-  require 'docs',
   require 'ai',
   require 'debugging',
 
