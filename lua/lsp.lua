@@ -243,6 +243,24 @@ return {
         },
       }
     end,
+    keys = {
+      {
+        '<leader>lr',
+        function()
+          vim.lsp.buf.rename()
+        end,
+        nowait = true,
+        desc = '[R]ename',
+      },
+      {
+        '<leader>la',
+        function(opts)
+          vim.lsp.buf.code_action(opts)
+        end,
+        nowait = true,
+        desc = 'Code [A]ction',
+      },
+    },
   },
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins

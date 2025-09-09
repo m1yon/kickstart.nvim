@@ -51,6 +51,7 @@ return {
       require('mini.jump2d').setup()
       require('mini.jump').setup()
       require('mini.pick').setup()
+      require('mini.extra').setup()
 
       local starter = require 'mini.starter'
       starter.setup {
@@ -117,14 +118,33 @@ return {
       },
 
       {
-        '<leader>fr',
+        '<leader>f;',
         mode = { 'n' },
         function()
           local miniPick = require 'mini.pick'
-
           miniPick.builtin.resume()
         end,
         desc = '[R]esume Find',
+      },
+
+      {
+        '<leader>fr',
+        mode = { 'n' },
+        function()
+          local miniExtra = require 'mini.extra'
+          miniExtra.pickers.lsp { scope = 'references' }
+        end,
+        desc = 'Find [R]eferences',
+      },
+
+      {
+        '<leader>fi',
+        mode = { 'n' },
+        function()
+          local miniExtra = require 'mini.extra'
+          miniExtra.pickers.lsp { scope = 'implementation' }
+        end,
+        desc = 'Find [I]mplementations',
       },
     },
   },

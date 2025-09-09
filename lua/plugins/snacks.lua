@@ -30,24 +30,6 @@ return {
         end,
         desc = '[O]pen lazygit',
       },
-
-      -- LSP
-      {
-        'gR',
-        function()
-          vim.lsp.buf.rename()
-        end,
-        nowait = true,
-        desc = 'Rename',
-      },
-      {
-        'ga',
-        function(opts)
-          vim.lsp.buf.code_action(opts)
-        end,
-        nowait = true,
-        desc = 'Code [A]ction',
-      },
     },
     init = function()
       vim.api.nvim_create_autocmd('User', {
