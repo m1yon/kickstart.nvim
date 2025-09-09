@@ -256,7 +256,6 @@ require('lazy').setup({
   require 'ui',
   require 'theme',
   require 'formatting',
-  require 'fs',
   require 'help',
   require 'editing',
   require 'linting',

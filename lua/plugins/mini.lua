@@ -10,6 +10,8 @@ return {
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
 
+      require('mini.files').setup {}
+
       vim.keymap.set({ 'n', 'x' }, 'm', '<Nop>')
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
@@ -46,5 +48,15 @@ return {
 
       require('mini.comment').setup {}
     end,
+    keys = {
+      {
+        '<leader>of',
+        mode = { 'n' },
+        function()
+          require('mini.files').open()
+        end,
+        desc = 'Open Mini [F]iles',
+      },
+    },
   },
 }
