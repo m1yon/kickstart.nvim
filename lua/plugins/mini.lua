@@ -54,6 +54,14 @@ return {
       require('mini.extra').setup()
       require('mini.cursorword').setup()
 
+      local indentscope = require 'mini.indentscope'
+      indentscope.setup {
+        draw = {
+          delay = 0,
+          animation = indentscope.gen_animation.none(),
+        },
+      }
+
       local clue = require 'mini.clue'
       require('mini.clue').setup {
         triggers = {

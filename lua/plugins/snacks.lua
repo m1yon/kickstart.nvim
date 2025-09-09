@@ -6,19 +6,9 @@ return {
     ---@type snacks.Config
     opts = {
       bigfile = { enabled = true },
-      dashboard = {
-        enabled = false,
-      },
-      indent = { enabled = true, animate = { enabled = false } },
       input = { enabled = true },
-      picker = {
-        enabled = false,
-      },
-      notifier = { enabled = true },
-      quickfile = { enabled = true },
       scope = { enabled = true },
       words = { enabled = true },
-      git = { enabled = false },
       lazygit = { enabled = true },
     },
     keys = {
