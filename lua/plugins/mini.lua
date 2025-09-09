@@ -52,6 +52,7 @@ return {
       require('mini.jump').setup()
       require('mini.pick').setup()
       require('mini.extra').setup()
+      require('mini.cursorword').setup()
 
       local clue = require 'mini.clue'
       require('mini.clue').setup {
