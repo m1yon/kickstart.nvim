@@ -48,6 +48,7 @@ return {
       require('mini.files').setup()
       require('mini.comment').setup()
       require('mini.starter').setup()
+      require('mini.jump2d').setup()
 
       local starter = require 'mini.starter'
       starter.setup {
@@ -64,8 +65,8 @@ return {
         function()
           local miniFiles = require 'mini.files'
 
-          MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
-          MiniFiles.reveal_cwd()
+          miniFiles.open(vim.api.nvim_buf_get_name(0), false)
+          miniFiles.reveal_cwd()
         end,
         desc = 'Open Mini [F]iles',
       },
