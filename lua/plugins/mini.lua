@@ -1,6 +1,7 @@
 return {
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
+    lazy = false,
     config = function()
       -- Better Around/Inside textobjects
       --
@@ -9,8 +10,6 @@ return {
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
-
-      require('mini.files').setup {}
 
       vim.keymap.set({ 'n', 'x' }, 'm', '<Nop>')
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
@@ -46,7 +45,17 @@ return {
         },
       }
 
-      require('mini.comment').setup {}
+      require('mini.files').setup()
+      require('mini.comment').setup()
+      require('mini.starter').setup()
+
+      local starter = require 'mini.starter'
+      starter.setup {
+        items = {
+          starter.sections.recent_files(5, true, true),
+          starter.sections.builtin_actions(),
+        },
+      }
     end,
     keys = {
       {
