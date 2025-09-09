@@ -50,6 +50,7 @@ return {
       require('mini.starter').setup()
       require('mini.jump2d').setup()
       require('mini.jump').setup()
+      require('mini.pick').setup()
 
       local starter = require 'mini.starter'
       starter.setup {
@@ -70,6 +71,60 @@ return {
           miniFiles.reveal_cwd()
         end,
         desc = 'Open Mini [F]iles',
+      },
+      {
+        '<leader>ff',
+        mode = { 'n' },
+        function()
+          local miniPick = require 'mini.pick'
+
+          miniPick.builtin.files()
+        end,
+        desc = 'Find [F]ile',
+      },
+
+      {
+        '<leader>fg',
+        mode = { 'n' },
+        function()
+          local miniPick = require 'mini.pick'
+
+          miniPick.builtin.grep_live()
+        end,
+        desc = 'Find [G]rep',
+      },
+
+      {
+        '<leader>fb',
+        mode = { 'n' },
+        function()
+          local miniPick = require 'mini.pick'
+
+          miniPick.builtin.buffers()
+        end,
+        desc = 'Find [B]uffer',
+      },
+
+      {
+        '<leader>fh',
+        mode = { 'n' },
+        function()
+          local miniPick = require 'mini.pick'
+
+          miniPick.builtin.help()
+        end,
+        desc = 'Find [H]elp',
+      },
+
+      {
+        '<leader>fr',
+        mode = { 'n' },
+        function()
+          local miniPick = require 'mini.pick'
+
+          miniPick.builtin.resume()
+        end,
+        desc = '[R]esume Find',
       },
     },
   },
