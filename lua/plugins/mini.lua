@@ -60,6 +60,8 @@ return {
       require('mini.statusline').setup()
       require('mini.pairs').setup()
       require('mini.notify').setup()
+      require('mini.snippets').setup()
+      require('mini.completion').setup()
 
       local indentscope = require 'mini.indentscope'
       indentscope.setup {
@@ -224,6 +226,26 @@ return {
           miniExtra.pickers.diagnostic()
         end,
         desc = 'Find [D]iagnostics',
+      },
+
+      {
+        '<leader>ld',
+        mode = { 'n' },
+        function()
+          local miniExtra = require 'mini.extra'
+          miniExtra.pickers.lsp { scope = 'document_symbol' }
+        end,
+        desc = 'Find [D]ocument Symbol',
+      },
+
+      {
+        '<leader>lw',
+        mode = { 'n' },
+        function()
+          local miniExtra = require 'mini.extra'
+          miniExtra.pickers.lsp { scope = 'workspace_symbol' }
+        end,
+        desc = 'Find [W]orkspace Symbol',
       },
 
       {
