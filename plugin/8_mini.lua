@@ -1,4 +1,4 @@
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+local add, now, later = minideps.add, minideps.now, minideps.later
 
 -- Use 'HEAD' because I personally update it and don't want to follow `main`
 -- This means that 'start/mini.nvim' will usually be present twice in
@@ -304,7 +304,21 @@ later(function()
   MiniMisc.setup_termbg_sync()
 end)
 
-later(function() require('mini.move').setup({ options = { reindent_linewise = false } }) end)
+later(function() require('mini.move').setup {
+  mappings = {
+    -- Move visual selection in Visual mode.
+    left = 'H',
+    right = 'L',
+    down = 'J',
+    up = 'K',
+
+    -- Move current line in Normal mode
+    line_left = '',
+    line_right = '',
+    line_down = '',
+    line_up = '',
+  },
+} end)
 
 later(function() require('mini.operators').setup() end)
 

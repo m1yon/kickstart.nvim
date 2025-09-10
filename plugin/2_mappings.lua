@@ -10,6 +10,7 @@ _G.Config.leader_group_clues = {
   { mode = 'n', keys = '<Leader>g', desc = '+Git' },
   { mode = 'n', keys = '<Leader>l', desc = '+LSP' },
   { mode = 'n', keys = '<Leader>L', desc = '+Lua/Log' },
+  { mode = 'n', keys = '<Leader>T', desc = '+Test' },
   { mode = 'n', keys = '<Leader>v', desc = '+Visits' },
 
   { mode = 'x', keys = '<Leader>l', desc = '+LSP' },
@@ -109,6 +110,16 @@ nmap_leader('Lc', '<Cmd>lua Config.log_clear()<CR>',               'Clear log')
 nmap_leader('LL', '<Cmd>luafile %<CR><Cmd>echo "Sourced lua"<CR>', 'Source buffer')
 nmap_leader('Ls', '<Cmd>lua Config.log_print()<CR>',               'Show log')
 nmap_leader('Lx', '<Cmd>lua Config.execute_lua_line()<CR>',        'Execute `lua` line')
+
+-- T is for 'test'
+nmap_leader('TF', '<Cmd>TestFile -strategy=make | copen<CR>',    'File (quickfix)')
+nmap_leader('Tf', '<Cmd>TestFile<CR>',                           'File')
+nmap_leader('TL', '<Cmd>TestLast -strategy=make | copen<CR>',    'Last (quickfix)')
+nmap_leader('Tl', '<Cmd>TestLast<CR>',                           'Last')
+nmap_leader('TN', '<Cmd>TestNearest -strategy=make | copen<CR>', 'Nearest (quickfix)')
+nmap_leader('Tn', '<Cmd>TestNearest<CR>',                        'Nearest')
+nmap_leader('TS', '<Cmd>TestSuite -strategy=make | copen<CR>',   'Suite (quickfix)')
+nmap_leader('Ts', '<Cmd>TestSuite<CR>',                          'Suite')
 
 -- v is for 'visits'
 nmap_leader('vv', '<Cmd>lua MiniVisits.add_label("core")<CR>',    'Add "core" label')
