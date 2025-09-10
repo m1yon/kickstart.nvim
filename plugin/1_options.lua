@@ -29,6 +29,12 @@ vim.o.splitbelow = true -- Horizontal splits will be below
 vim.o.splitright = true -- Vertical splits will be to the right
 vim.o.wrap = false -- Display long lines as just one line
 
+-- Sync clipboard between OS and Neovim.
+-- Schedule the setting after `UiEnter` because it can increase startup-time.
+vim.schedule(function()
+  vim.o.clipboard = 'unnamedplus'
+end)
+
 vim.o.fillchars = table.concat(
 	-- Special UI symbols
 	{
