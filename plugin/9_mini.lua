@@ -46,3 +46,17 @@ later(function()
   })
 end)
 
+later(function()
+  require('mini.pick').setup()
+  vim.ui.select = MiniPick.ui_select
+  vim.keymap.set('n', ',', '<Cmd>Pick buf_lines scope="current" preserve_order=true<CR>', { nowait = true })
+
+  MiniPick.registry.projects = function()
+    local cwd = vim.fn.expand('~/repos')
+    local choose = function(item)
+      vim.schedule(function() MiniPick.builtin.files(nil, { source = { cwd = item.path } }) end)
+    end
+    return MiniExtra.pickers.explorer({ cwd = cwd }, { source = { choose = choose } })
+  end
+end)
+
