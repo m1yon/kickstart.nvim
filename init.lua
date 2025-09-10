@@ -28,15 +28,28 @@ now(function() require('mini.notify').setup() end)
 now(function() require('mini.icons').setup() end)
 now(function() require('mini.tabline').setup() end)
 now(function() require('mini.statusline').setup() end)
+now(function() require('mini.starter').setup() end)
 
 -- Safely execute later
+later(function() require('mini.snippets').setup() end)
 later(function() require('mini.ai').setup() end)
 later(function() require('mini.comment').setup() end)
+later(function() require('mini.completion').setup() end)
+later(function() require('mini.clue').setup() end)
+later(function() require('mini.move').setup() end)
+later(function() require('mini.pairs').setup() end)
 later(function() require('mini.pick').setup() end)
 later(function() require('mini.surround').setup() end)
+later(function() require('mini.files').setup() end)
+later(function() require('mini.git').setup() end)
+later(function() require('mini.diff').setup() end)
+later(function() require('mini.jump').setup() end)
+later(function() require('mini.jump2d').setup() end)
+later(function() require('mini.misc').setup() end)
+later(function() require('mini.visits').setup() end)
 
 now(function()
-  -- Use other plugins with `add()`. It ensures plugin is available in current
+  -- Use other plugins with tadd()`. It ensures plugin is available in current
   -- session (installs if absent)
   add({
     source = 'neovim/nvim-lspconfig',
