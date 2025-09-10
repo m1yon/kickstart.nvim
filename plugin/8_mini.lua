@@ -7,10 +7,6 @@ add({ name = "mini.nvim", checkout = "HEAD" })
 
 -- Step one ===================================================================
 now(function()
-	vim.cmd("colorscheme miniwinter")
-end)
-
-now(function()
 	require("mini.basics").setup({
 		-- Manage options manually in a spirit of transparency
 		options = { basic = false },
