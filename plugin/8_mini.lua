@@ -1,4 +1,4 @@
-local add, now, later = minideps.add, minideps.now, minideps.later
+local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 -- Use 'HEAD' because I personally update it and don't want to follow `main`
 -- This means that 'start/mini.nvim' will usually be present twice in
