@@ -244,6 +244,8 @@ return {
       }
     end,
     keys = {
+      { 'gD', vim.lsp.buf.declaration, desc = 'Go to [D]eclaration' },
+      { 'gd', vim.lsp.buf.definition, desc = 'Go to [D]efinition' },
       {
         '<leader>lr',
         function()

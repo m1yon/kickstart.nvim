@@ -179,6 +179,7 @@ vim.keymap.del('n', 'grn')
 vim.keymap.del('n', 'grr')
 vim.keymap.del('n', 'gra')
 vim.keymap.del('n', 'gri')
+vim.keymap.del('n', 'grt')
 
 vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = 'Open diagnosis window' })
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.goto_next, { desc = 'Show next diagnosis' })

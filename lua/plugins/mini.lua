@@ -204,7 +204,7 @@ return {
       },
 
       {
-        '<leader>fr',
+        'gr',
         mode = { 'n' },
         function()
           local miniExtra = require 'mini.extra'
@@ -214,13 +214,13 @@ return {
       },
 
       {
-        '<leader>fi',
+        'gi',
         mode = { 'n' },
         function()
           local miniExtra = require 'mini.extra'
           miniExtra.pickers.lsp { scope = 'implementation' }
         end,
-        desc = 'Find [I]mplementations',
+        desc = 'Find [I]mplementation',
       },
 
       {
