@@ -1,5 +1,9 @@
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
+now(function() require('mini.sessions').setup() end)
+
+later(function() require('mini.bufremove').setup() end)
+
 later(function()
   local miniclue = require('mini.clue')
   --stylua: ignore
@@ -41,3 +45,4 @@ later(function()
     }
   })
 end)
+
