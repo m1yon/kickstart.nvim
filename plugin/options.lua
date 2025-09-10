@@ -13,6 +13,38 @@ vim.o.shada        = "'100,<50,s10,:1000,/100,@100,h" -- Limit what is stored in
 
 vim.cmd('filetype plugin indent on') -- Enable all filetype plugins
 
+-- UI =========================================================================
+vim.o.breakindent   = true      -- Indent wrapped lines to match line start
+vim.o.colorcolumn   = '+1'      -- Draw colored column one step to the right of desired maximum width
+vim.o.cursorline    = true      -- Enable highlighting of the current line
+vim.o.linebreak     = true      -- Wrap long lines at 'breakat' (if 'wrap' is set)
+vim.o.list          = true      -- Show helpful character indicators
+vim.o.number        = true      -- Show line numbers
+vim.o.pumheight     = 10        -- Make popup menu smaller
+vim.o.ruler         = false     -- Don't show cursor position
+vim.o.shortmess     = 'FOSWaco' -- Disable certain messages from |ins-completion-menu|
+vim.o.showmode      = false     -- Don't show mode in command line
+vim.o.signcolumn    = 'yes'     -- Always show signcolumn or it would frequently shift
+vim.o.splitbelow    = true      -- Horizontal splits will be below
+vim.o.splitright    = true      -- Vertical splits will be to the right
+vim.o.wrap          = false     -- Display long lines as just one line
+
+vim.o.fillchars = table.concat(
+  -- Special UI symbols
+  { 'eob: ', 'fold:╌', 'horiz:═', 'horizdown:╦', 'horizup:╩', 'vert:║', 'verthoriz:╬', 'vertleft:╣', 'vertright:╠' },
+  ','
+)
+vim.o.listchars = table.concat({ 'extends:…', 'nbsp:␣', 'precedes:…', 'tab:> ' }, ',') -- Special text symbols
+vim.o.cursorlineopt = 'screenline,number' -- Show cursor line only screen line when wrapped
+vim.o.breakindentopt = 'list:-1' -- Add padding for lists when 'wrap' is on
+
+vim.o.winborder = 'double'                   -- Use double-line as default border
+
+-- Colors =====================================================================
+-- Enable syntax highlighing if it wasn't already (as it is time consuming)
+-- Don't use defer it because it affects start screen appearance
+if vim.fn.exists('syntax_on') ~= 1 then vim.cmd('syntax enable') end
+
 -- Editing ====================================================================
 vim.o.autoindent    = true     -- Use auto indent
 vim.o.expandtab     = true     -- Convert tabs to spaces
@@ -41,3 +73,37 @@ if vim.fn.has('nvim-0.11') == 1 then
   vim.o.completeopt = 'menuone,noselect,fuzzy,nosort' -- Use fuzzy matching for built-in completion
 end
 vim.o.complete     = '.,w,b,kspell' -- Use spell check and don't use tags for completion
+
+-- Folds ======================================================================
+vim.o.foldmethod  = 'indent' -- Set 'indent' folding method
+vim.o.foldlevel   = 1        -- Display all folds except top ones
+vim.o.foldnestmax = 10       -- Create folds only for some number of nested levels
+vim.g.markdown_folding = 1   -- Use folding by heading in markdown files
+
+-- Custom autocommands ========================================================
+local augroup = vim.api.nvim_create_augroup('CustomSettings', {})
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup,
+  callback = function()
+    -- Don't auto-wrap comments and don't insert comment leader after hitting 'o'
+    -- If don't do this on `FileType`, this keeps reappearing due to being set in
+    -- filetype plugins.
+    vim.cmd('setlocal formatoptions-=c formatoptions-=o')
+  end,
+  desc = [[Ensure proper 'formatoptions']],
+})
+
+-- Diagnostics ================================================================
+local diagnostic_opts = {
+  -- Define how diagnostic entries should be shown
+  signs = { priority = 9999, severity = { min = 'WARN', max = 'ERROR' } },
+  underline = { severity = { min = 'HINT', max = 'ERROR' } },
+  virtual_lines = false,
+  virtual_text = { current_line = true, severity = { min = 'ERROR', max = 'ERROR' } },
+
+  -- Don't update diagnostics when typing
+  update_in_insert = false,
+}
+
+-- Use `later()` to avoid sourcing `vim.diagnostic` on startup
+MiniDeps.later(function() vim.diagnostic.config(diagnostic_opts) end)
