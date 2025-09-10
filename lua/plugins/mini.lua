@@ -245,7 +245,7 @@ return {
         mode = { 'n' },
         function()
           local miniExtra = require 'mini.extra'
-          miniExtra.pickers.lsp { scope = 'workspace_symbol', symbol_query = '.' }
+          miniExtra.pickers.lsp { scope = 'workspace_symbol', symbol_query = '' }
         end,
         desc = 'Find [W]orkspace Symbol',
       },
