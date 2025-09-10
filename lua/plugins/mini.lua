@@ -3,6 +3,9 @@ return {
     'echasnovski/mini.nvim',
     lazy = false,
     config = function()
+      require('mini.icons').setup()
+      MiniIcons.tweak_lsp_kind()
+
       -- Better Around/Inside textobjects
       --
       -- Examples:
@@ -56,7 +59,6 @@ return {
       require('mini.extra').setup()
       require('mini.cursorword').setup()
       require('mini.visits').setup()
-      require('mini.icons').setup()
       require('mini.statusline').setup()
       require('mini.pairs').setup()
       require('mini.notify').setup()
@@ -229,17 +231,17 @@ return {
       },
 
       {
-        '<leader>ld',
+        '<leader>fs',
         mode = { 'n' },
         function()
           local miniExtra = require 'mini.extra'
           miniExtra.pickers.lsp { scope = 'document_symbol' }
         end,
-        desc = 'Find [D]ocument Symbol',
+        desc = 'Find Document [S]ymbol',
       },
 
       {
-        '<leader>lw',
+        '<leader>fw',
         mode = { 'n' },
         function()
           local miniExtra = require 'mini.extra'
