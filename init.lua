@@ -20,6 +20,14 @@ require('mini.deps').setup({ path = { package = path_package } })
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 -- Safely execute immediately
+now(function() require('mini.basics').setup({
+	mappings = {
+		windows = true
+	},
+	autocommands = {
+		relnum_in_visual_mode = true
+	}
+}) end)
 now(function()
   vim.o.termguicolors = true
   vim.cmd('colorscheme miniwinter')
