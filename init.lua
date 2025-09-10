@@ -12,6 +12,9 @@ if not vim.loop.fs_stat(mini_path) then
   vim.cmd('echo "Installed `mini.nvim`" | redraw')
 end
 
+-- options
+vim.wo.relativenumber = true
+
 -- Set up 'mini.deps' (customize to your liking)
 require('mini.deps').setup({ path = { package = path_package } })
 
@@ -24,9 +27,6 @@ now(function() require('mini.basics').setup({
 	mappings = {
 		windows = true
 	},
-	autocommands = {
-		relnum_in_visual_mode = true
-	}
 }) end)
 now(function()
   vim.o.termguicolors = true
