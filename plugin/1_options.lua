@@ -74,12 +74,6 @@ if vim.fn.has('nvim-0.11') == 1 then
 end
 vim.o.complete     = '.,w,b,kspell' -- Use spell check and don't use tags for completion
 
--- Folds ======================================================================
-vim.o.foldmethod  = 'indent' -- Set 'indent' folding method
-vim.o.foldlevel   = 1        -- Display all folds except top ones
-vim.o.foldnestmax = 10       -- Create folds only for some number of nested levels
-vim.g.markdown_folding = 1   -- Use folding by heading in markdown files
-
 -- Custom autocommands ========================================================
 local augroup = vim.api.nvim_create_augroup('CustomSettings', {})
 vim.api.nvim_create_autocmd('FileType', {

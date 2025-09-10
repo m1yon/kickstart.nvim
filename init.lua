@@ -41,7 +41,6 @@ later(function() require('mini.snippets').setup() end)
 later(function() require('mini.ai').setup() end)
 later(function() require('mini.comment').setup() end)
 later(function() require('mini.completion').setup() end)
-later(function() require('mini.clue').setup() end)
 later(function() require('mini.move').setup() end)
 later(function() require('mini.pairs').setup() end)
 later(function() require('mini.pick').setup() end)
@@ -79,3 +78,6 @@ later(function()
     highlight = { enable = true },
   })
 end)
+
+-- Define main config table to be able to use it in scripts
+_G.Config = {}
