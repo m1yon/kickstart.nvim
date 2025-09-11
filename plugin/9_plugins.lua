@@ -102,7 +102,7 @@ later(function()
 	})
 end)
 
--- Better built-in terminal ===================================================
+  -- Better built-in terminal ===================================================
 later(function()
 	add("kassio/neoterm")
 

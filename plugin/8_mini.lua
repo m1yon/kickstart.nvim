@@ -193,7 +193,7 @@ later(function()
 	require("mini.bufremove").setup()
 end)
 
-later(function()
+now(function()
 	local miniclue = require("mini.clue")
   --stylua: ignore
   miniclue.setup({
