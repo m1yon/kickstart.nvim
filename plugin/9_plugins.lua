@@ -1,6 +1,12 @@
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local now_if_args = vim.fn.argc(-1) > 0 and now or later
 
+-- Theme =====================================================================
+now(function()
+	add("shaunsingh/nord.nvim")
+	vim.cmd("colorscheme nord")
+end)
+
 -- Tree-sitter (advanced syntax parsing, highlighting, textobjects) ===========
 now_if_args(function()
 	add({
@@ -189,7 +195,10 @@ later(function()
 	vim.g.mkdp_auto_close = 0
 end)
 
-now(function()
-	add("shaunsingh/nord.nvim")
-	vim.cmd("colorscheme nord")
+-- AI =====================================================================
+later(function()
+	add("supermaven-inc/supermaven-nvim")
+	require("supermaven-nvim").setup({ keymaps = {
+		accept_suggestion = "<c-a>",
+	} })
 end)
