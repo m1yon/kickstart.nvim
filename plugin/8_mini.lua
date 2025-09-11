@@ -11,7 +11,6 @@ now(function()
 		-- Manage options manually in a spirit of transparency
 		options = { basic = false },
 		mappings = { windows = true, move_with_alt = true },
-		autocommands = { relnum_in_visual_mode = true },
 	})
 end)
 
