@@ -101,8 +101,6 @@ nmap_leader("lR", "<Cmd>lua vim.lsp.buf.references()<CR>", "References")
 nmap_leader("lr", "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename")
 nmap_leader("ls", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Source definition")
 
-xmap_leader("lf", formatting_cmd, "Format selection")
-
 -- L is for 'Lua'
 nmap_leader("Lc", "<Cmd>lua Config.log_clear()<CR>", "Clear log")
 nmap_leader("LL", '<Cmd>luafile %<CR><Cmd>echo "Sourced lua"<CR>', "Source buffer")
