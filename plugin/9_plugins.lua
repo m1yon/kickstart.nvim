@@ -81,6 +81,12 @@ later(function()
 		},
 
 		formatters = {},
+
+		format_on_save = {
+			-- These options will be passed to conform.format()
+			timeout_ms = 500,
+			lsp_format = "fallback",
+		},
 	})
 end)
 
@@ -102,7 +108,7 @@ later(function()
 	})
 end)
 
-  -- Better built-in terminal ===================================================
+-- Better built-in terminal ===================================================
 later(function()
 	add("kassio/neoterm")
 
@@ -184,6 +190,6 @@ later(function()
 end)
 
 now(function()
-  add('shaunsingh/nord.nvim')
+	add("shaunsingh/nord.nvim")
 	vim.cmd("colorscheme nord")
 end)
