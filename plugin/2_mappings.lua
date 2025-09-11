@@ -112,13 +112,13 @@ nmap_leader("Lx", "<Cmd>lua Config.execute_lua_line()<CR>", "Execute `lua` line"
 
 -- T is for 'test'
 nmap_leader("TF", "<Cmd>TestFile -strategy=make | copen<CR>", "File (quickfix)")
-nmap_leader("Tf", "<Cmd>TestFile<CR>", "File")
+nmap_leader("Tf", "<Cmd>TestFile -strategy=neovim<CR>", "File")
 nmap_leader("TL", "<Cmd>TestLast -strategy=make | copen<CR>", "Last (quickfix)")
-nmap_leader("Tl", "<Cmd>TestLast<CR>", "Last")
+nmap_leader("Tl", "<Cmd>TestLast -strategy=neovim<CR>", "Last")
 nmap_leader("TN", "<Cmd>TestNearest -strategy=make | copen<CR>", "Nearest (quickfix)")
-nmap_leader("Tn", "<Cmd>TestNearest<CR>", "Nearest")
+nmap_leader("Tn", "<Cmd>TestNearest -strategy=neovim<CR>", "Nearest")
 nmap_leader("TS", "<Cmd>TestSuite -strategy=make | copen<CR>", "Suite (quickfix)")
-nmap_leader("Ts", "<Cmd>TestSuite<CR>", "Suite")
+nmap_leader("Ts", "<Cmd>TestSuite -strategy=neovim<CR>", "Suite")
 
 -- v is for 'visits'
 nmap_leader("vv", '<Cmd>lua MiniVisits.add_label("core")<CR>', 'Add "core" label')
