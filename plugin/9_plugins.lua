@@ -3,8 +3,7 @@ local now_if_args = vim.fn.argc(-1) > 0 and now or later
 
 -- Theme =====================================================================
 now(function()
-	add("shaunsingh/nord.nvim")
-	vim.cmd("colorscheme nord")
+	vim.cmd("colorscheme miniwinter")
 end)
 
 -- Tree-sitter (advanced syntax parsing, highlighting, textobjects) ===========
