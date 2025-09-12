@@ -338,19 +338,6 @@ later(function()
 end)
 
 later(function()
-	local map = require("mini.map")
-	local gen_integr = map.gen_integration
-	map.setup({
-		symbols = { encode = map.gen_encode_symbols.dot("4x2") },
-		integrations = { gen_integr.builtin_search(), gen_integr.diff(), gen_integr.diagnostic() },
-	})
-	vim.keymap.set("n", [[\h]], ":let v:hlsearch = 1 - v:hlsearch<CR>", { desc = "Toggle hlsearch", silent = true })
-	for _, key in ipairs({ "n", "N", "*" }) do
-		vim.keymap.set("n", key, key .. "zv<Cmd>lua MiniMap.refresh({}, { lines = false, scrollbar = false })<CR>")
-	end
-end)
-
-later(function()
 	require("mini.misc").setup({ make_global = { "put", "put_text", "stat_summary", "bench_time" } })
 	MiniMisc.setup_auto_root()
 	MiniMisc.setup_termbg_sync()

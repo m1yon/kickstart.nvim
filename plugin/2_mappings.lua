@@ -27,6 +27,9 @@ local xmap_leader = function(suffix, rhs, desc, opts)
 	vim.keymap.set("x", "<Leader>" .. suffix, rhs, opts)
 end
 
+-- top level mappings
+nmap_leader("h", ":let v:hlsearch = 1 - v:hlsearch<CR>", "Toggle hlsearch", { silent = true })
+
 -- b is for 'buffer'
 nmap_leader("ba", "<Cmd>b#<CR>", "Alternate")
 nmap_leader("bd", "<Cmd>lua MiniBufremove.delete()<CR>", "Delete")
